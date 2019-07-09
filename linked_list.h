@@ -110,6 +110,36 @@ public:
         p_head=p_head->p_next;
         delete del;
     }
+    void remove_back(){
+        node *delt = p_head;
+
+        while(delt && delt->p_next) {
+            delt = delt->p_next;
+        }
+        delete delt;
+    }
+    void remove(linked_list<T>::iterator &i){
+        if(i==p_head){
+            node *delt=i.n->p_next;
+            p_head=p_head->p_next;
+            delete i.n;
+            i.n=delt;
+
+        }
+        else if(i==p_last){
+            i.n->p_prev->p_next=nullptr;
+            p_last=i.n->p_prev;
+            delete i.n;
+            i.n=p_head;
+        }
+        else{
+            node *delt=i.n->p_next;
+            i.n->p_prev->p_next=i.n->p_next;
+            i.n->p_next->p_prev=i.n->p_prev;
+            delete i.n;
+            i.n=delt;
+        }
+    }
     ~linked_list()
     {
         while(p_head) remove_front();
